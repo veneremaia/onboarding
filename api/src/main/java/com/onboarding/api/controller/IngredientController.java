@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +41,20 @@ public class IngredientController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PostMapping
+    public ResponseEntity<IngredientDto> add(@RequestBody IngredientDto dto) {
+        LOG.debug("Add ingredient -> {}", dto);
+        IngredientDto result = mapToDto(service.add(mapToBo(dto)));
+        LOG.debug("result -> {}", result);
+        return ResponseEntity.ok().body(result);
+    }
+
     private IngredientDto mapToDto(IngredientBo bo) {
         return new IngredientDto(bo.getId(), bo.getDescription());
     }
+
+    private IngredientBo mapToBo(IngredientDto dto) {
+        return new IngredientBo(dto.getId(), dto.getDescription());
+    }
+
 }

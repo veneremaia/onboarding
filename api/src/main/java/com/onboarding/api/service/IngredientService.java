@@ -1,5 +1,6 @@
 package com.onboarding.api.service;
 
+import com.onboarding.api.controller.dto.IngredientDto;
 import com.onboarding.api.repository.IngredientRepository;
 import com.onboarding.api.repository.entity.Ingredient;
 import com.onboarding.api.service.domain.IngredientBo;
@@ -26,7 +27,16 @@ public class IngredientService {
                 .orElseThrow(() -> new NotFoundException(String.format("Ingrediente con id %s no existe", id)));
     }
 
+    public IngredientBo add(IngredientBo ingredient) {
+        Ingredient saved = repository.save(mapToEntity(ingredient));
+        return mapToBo(saved);
+    }
+
     private IngredientBo mapToBo(Ingredient entity) {
         return new IngredientBo(entity.getId(), entity.getDescription());
+    }
+
+    private Ingredient mapToEntity(IngredientBo bo) {
+        return new Ingredient(bo.getId(), bo.getDescription());
     }
 }
