@@ -25,4 +25,7 @@ public class Ingredient {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "price", nullable = false)
+    private Double price;
 }

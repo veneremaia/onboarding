@@ -33,10 +33,10 @@ public class IngredientService {
     }
 
     private IngredientBo mapToBo(Ingredient entity) {
-        return new IngredientBo(entity.getId(), entity.getDescription());
+        return new IngredientBo(entity.getId(), entity.getDescription(), entity.getPrice());
     }
 
     private Ingredient mapToEntity(IngredientBo bo) {
-        return new Ingredient(bo.getId(), bo.getDescription());
+        return new Ingredient(bo.getId(), bo.getDescription(), bo.getPrice());
     }
 }

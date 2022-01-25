@@ -12,4 +12,6 @@ public class IngredientBo {
     private Integer id;
 
     private String description;
+
+    private Double price;
 }

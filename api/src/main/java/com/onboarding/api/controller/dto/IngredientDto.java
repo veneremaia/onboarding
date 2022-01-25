@@ -17,4 +17,7 @@ public class IngredientDto {
 
     @NotNull(message = "description is mandatory")
     private String description;
+
+    @NotNull(message = "price is mandatory")
+    private Double price;
 }
