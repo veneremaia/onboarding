@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class IngredientController {
     }
 
     @PostMapping
-    public ResponseEntity<IngredientDto> add(@RequestBody IngredientDto dto) {
+    public ResponseEntity<IngredientDto> add(@Valid @RequestBody IngredientDto dto) {
         LOG.debug("Add ingredient -> {}", dto);
         IngredientDto result = mapToDto(service.add(mapToBo(dto)));
         LOG.debug("result -> {}", result);
