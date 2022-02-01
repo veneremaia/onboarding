@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="IngredientClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/IngredientClient_jar</output-path>
+    <root id="archive" name="IngredientClient.jar">
+      <element id="module-output" name="IngredientClient" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20180813/json-20180813.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/squareup/okhttp/okhttp/2.7.5/okhttp-2.7.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/squareup/okio/okio/1.6.0/okio-1.6.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
