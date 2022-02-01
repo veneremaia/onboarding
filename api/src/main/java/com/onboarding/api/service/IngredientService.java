@@ -1,42 +1,14 @@
 package com.onboarding.api.service;
 
-import com.onboarding.api.controller.dto.IngredientDto;
-import com.onboarding.api.repository.IngredientRepository;
-import com.onboarding.api.repository.entity.Ingredient;
 import com.onboarding.api.service.domain.IngredientBo;
-import com.onboarding.api.service.exception.NotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-public class IngredientService {
+public interface IngredientService {
 
-    private final IngredientRepository repository;
+    List<IngredientBo> findAll();
 
-    public List<IngredientBo> findAll() {
-        return repository.findAll().stream().map(this::mapToBo).collect(Collectors.toList());
-    }
+    IngredientBo findById(Integer id);
 
-    public IngredientBo findById(Integer id) {
-        return repository.findById(id)
-                .map(this::mapToBo)
-                .orElseThrow(() -> new NotFoundException(String.format("Ingrediente con id %s no existe", id)));
-    }
-
-    public IngredientBo add(IngredientBo ingredient) {
-        Ingredient saved = repository.save(mapToEntity(ingredient));
-        return mapToBo(saved);
-    }
-
-    private IngredientBo mapToBo(Ingredient entity) {
-        return new IngredientBo(entity.getId(), entity.getDescription(), entity.getPrice());
-    }
-
-    private Ingredient mapToEntity(IngredientBo bo) {
-        return new Ingredient(bo.getId(), bo.getDescription(), bo.getPrice());
-    }
+    IngredientBo add(IngredientBo ingredient);
 }
