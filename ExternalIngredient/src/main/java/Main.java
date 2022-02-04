@@ -1,17 +1,16 @@
 import entity.Ingredient;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
 
-    public static void main (String [ ] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         IngredientClient ingredientClient = new IngredientClient();
         List<Ingredient> result = ingredientClient.getIngredients();
-        Ingredient pollo = new Ingredient("Pollo",52.20);
+        Ingredient pollo = new Ingredient("Harina", 2.20, LocalDate.parse("2024-02-15"));
         ingredientClient.addIngredient(pollo);
     }
 }
