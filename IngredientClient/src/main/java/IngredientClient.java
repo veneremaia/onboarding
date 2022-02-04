@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,6 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
     }
 
     private Ingredient convertToIngredient(JSONObject json){
-        return new Ingredient(json.getInt("id"),json.getString("description"),json.getDouble("price"));
+        return new Ingredient(json.getInt("id"),json.getString("description"),json.getDouble("price"), LocalDate.parse(json.getString("expirationDate")));
     }
 }

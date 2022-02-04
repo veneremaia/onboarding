@@ -1,5 +1,7 @@
 package entity;
 
+import java.time.LocalDate;
+
 public class Ingredient {
 
     private Integer id;
@@ -8,22 +10,28 @@ public class Ingredient {
 
     private Double price;
 
-    public Ingredient(Integer id, String description, Double price) {
+    private LocalDate expirationDate;
+
+    private String readFrom;
+
+    public Ingredient(Integer id, String description, Double price, LocalDate expirationDate) {
         this.id = id;
         this.description = description;
         this.price = price;
+        this.expirationDate = expirationDate;
+        this.readFrom = "API";
     }
 
-    public Ingredient(String description, Double price) {
-        this(null, description, price);
+    public Ingredient(String description, Double price, LocalDate expirationDate) {
+        this(null, description, price, expirationDate);
     }
 
-    public Ingredient(String description) {
-        this(null, description, null);
+    public Ingredient(String description, LocalDate expirationDate) {
+        this(null, description, null, expirationDate);
     }
 
     @Override
     public String toString() {
-        return "{'description': '" + description + "', 'price': '" + price +"'}";
+        return "{'description': '" + description + "', 'price': '" + price +"', 'expirationDate': '" + expirationDate +"'}";
     }
 }
