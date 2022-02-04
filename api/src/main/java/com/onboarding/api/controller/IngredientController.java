@@ -51,11 +51,11 @@ public class IngredientController {
     }
 
     private IngredientDto mapToDto(IngredientBo bo) {
-        return new IngredientDto(bo.getId(), bo.getDescription(), bo.getPrice());
+        return new IngredientDto(bo.getId(), bo.getDescription(), bo.getPrice(),bo.getExpirationDate());
     }
 
     private IngredientBo mapToBo(IngredientDto dto) {
-        return new IngredientBo(dto.getId(), dto.getDescription(), dto.getPrice());
+        return new IngredientBo(dto.getId(), dto.getDescription(), dto.getPrice(),dto.getExpirationDate());
     }
 
 }

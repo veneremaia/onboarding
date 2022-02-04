@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,4 +21,8 @@ public class IngredientDto {
 
     @NotNull(message = "price is mandatory")
     private Double price;
+
+    @NotNull(message = "expiration date is mandatory")
+    private LocalDate expirationDate;
+
 }

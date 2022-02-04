@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -28,4 +29,7 @@ public class Ingredient {
 
     @Column(name = "price", nullable = false)
     private Double price;
+
+    @Column(name = "expiration_date", nullable = false)
+    private LocalDate expirationDate;
 }

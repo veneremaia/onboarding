@@ -36,10 +36,10 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     private IngredientBo mapToBo(Ingredient entity) {
-        return new IngredientBo(entity.getId(), entity.getDescription(), entity.getPrice());
+        return new IngredientBo(entity.getId(), entity.getDescription(), entity.getPrice(),entity.getExpirationDate());
     }
 
     private Ingredient mapToEntity(IngredientBo bo) {
-        return new Ingredient(bo.getId(), bo.getDescription(), bo.getPrice());
+        return new Ingredient(bo.getId(), bo.getDescription(), bo.getPrice(),bo.getExpirationDate());
     }
 }
