@@ -6,6 +6,8 @@ import com.onboarding.api.repository.entity.Ingredient;
 import com.onboarding.api.service.domain.IngredientBo;
 import com.onboarding.api.service.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +20,8 @@ public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository repository;
 
     @Override
-    public List<IngredientBo> findAll() {
-        return repository.findAll().stream().map(this::mapToBo).collect(Collectors.toList());
+    public List<IngredientBo> findAll(int page, int size, String sort) {
+        return repository.findAll(PageRequest.of(page, size, Sort.by(sort))).getContent().stream().map(this::mapToBo).collect(Collectors.toList());
     }
 
     @Override

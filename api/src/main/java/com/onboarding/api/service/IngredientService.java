@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IngredientService {
 
-    List<IngredientBo> findAll();
+    List<IngredientBo> findAll(int page, int size, String sort);
 
     IngredientBo findById(Integer id);
 
