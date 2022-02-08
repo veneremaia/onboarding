@@ -7,9 +7,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IngredientClient extends HttpRequestBaseFunctionality {
+
+    private Map<Integer,Ingredient> cache;
+
+    public IngredientClient(){
+        this.cache = new HashMap<>();
+    }
 
     public List<Ingredient> getIngredients() throws IOException {
         Response response = this.getResponse("ingredient", "GET", null);
@@ -21,8 +29,14 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
     }
 
     public Ingredient getIngredientById(int id) throws IOException {
+        if(cache.containsKey(id)){
+            cache.get(id).setReadFrom("cache");
+            return cache.get(id);
+        }
         Response response = this.getResponse("ingredient/" + id, "GET", null);
-        return convertToIngredient(new JSONObject(response.body().string()));
+        Ingredient result = convertToIngredient(new JSONObject(response.body().string()));
+        cache.put(result.getId(),result);
+        return result;
     }
 
     public Ingredient addIngredient(Ingredient ingredient) throws IOException {

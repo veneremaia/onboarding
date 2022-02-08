@@ -14,6 +14,32 @@ public class Ingredient {
 
     private String readFrom;
 
+
+    public String getReadFrom() {
+        return readFrom;
+    }
+
+    public void setReadFrom(String readFrom) {
+        this.readFrom = readFrom;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+
     public Ingredient(Integer id, String description, Double price, LocalDate expirationDate) {
         this.id = id;
         this.description = description;
@@ -32,6 +58,6 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "{'description': '" + description + "', 'price': '" + price +"', 'expirationDate': '" + expirationDate +"'}";
+        return "{'description': '" + description + "', 'price': '" + price +"', 'expirationDate': '" + expirationDate +"', 'readFrom': '" + readFrom + "'}";
     }
 }
