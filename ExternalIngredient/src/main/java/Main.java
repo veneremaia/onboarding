@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        IngredientClient ingredientClient = new IngredientClient();
+        IngredientClient ingredientClient = new IngredientClient(args[0]);
         List<Ingredient> result = ingredientClient.getIngredients();
         Ingredient pollo = new Ingredient("Harina", 2.20, LocalDate.parse("2024-02-15"));
         ingredientClient.addIngredient(pollo);

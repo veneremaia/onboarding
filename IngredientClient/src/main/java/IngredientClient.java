@@ -15,12 +15,13 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
 
     private Map<Integer,Ingredient> cache;
 
-    public IngredientClient(){
+    public IngredientClient(String baseUrl) {
+        super(baseUrl);
         this.cache = new HashMap<>();
     }
 
     public List<Ingredient> getIngredients() throws IOException {
-        Response response = this.getResponse("ingredient", "GET", null);
+        Response response = this.getResponse("/ingredient", "GET", null);
         List<Ingredient> result = new ArrayList<>();
         for(Object g : new JSONArray(response.body().string())){
             result.add(convertToIngredient((JSONObject)g));
@@ -33,14 +34,14 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
             cache.get(id).setReadFrom("cache");
             return cache.get(id);
         }
-        Response response = this.getResponse("ingredient/" + id, "GET", null);
+        Response response = this.getResponse("/ingredient/" + id, "GET", null);
         Ingredient result = convertToIngredient(new JSONObject(response.body().string()));
         cache.put(result.getId(),result);
         return result;
     }
 
     public Ingredient addIngredient(Ingredient ingredient) throws IOException {
-        Response response = this.getResponse("ingredient", "POST", new JSONObject(ingredient.toString()));
+        Response response = this.getResponse("/ingredient", "POST", new JSONObject(ingredient.toString()));
         return convertToIngredient(new JSONObject(response.body().string()));
     }
 
