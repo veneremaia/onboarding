@@ -13,7 +13,9 @@ import java.util.Map;
 
 public class IngredientClient extends HttpRequestBaseFunctionality {
 
-    private Map<Integer,Ingredient> cache;
+    private final String URL_INGREDIENT = "/ingredient";
+
+    private Map<Integer, Ingredient> cache;
 
     public IngredientClient(String baseUrl) {
         super(baseUrl);
@@ -21,31 +23,35 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
     }
 
     public List<Ingredient> getIngredients() throws IOException {
-        Response response = this.getResponse("/ingredient", "GET", null);
+       return getIngredients(null);
+    }
+
+    public List<Ingredient> getIngredients(Map<String, String> params) throws IOException {
+        Response response = this.getResponse(URL_INGREDIENT, "GET", null, params);
         List<Ingredient> result = new ArrayList<>();
-        for(Object g : new JSONArray(response.body().string())){
-            result.add(convertToIngredient((JSONObject)g));
+        for (Object g : new JSONArray(response.body().string())) {
+            result.add(convertToIngredient((JSONObject) g));
         }
         return result;
     }
 
     public Ingredient getIngredientById(int id) throws IOException {
-        if(cache.containsKey(id)){
+        if (cache.containsKey(id)) {
             cache.get(id).setReadFrom("cache");
             return cache.get(id);
         }
-        Response response = this.getResponse("/ingredient/" + id, "GET", null);
+        Response response = this.getResponse(URL_INGREDIENT + "/" + id, "GET", null, null);
         Ingredient result = convertToIngredient(new JSONObject(response.body().string()));
-        cache.put(result.getId(),result);
+        cache.put(result.getId(), result);
         return result;
     }
 
     public Ingredient addIngredient(Ingredient ingredient) throws IOException {
-        Response response = this.getResponse("/ingredient", "POST", new JSONObject(ingredient.toString()));
+        Response response = this.getResponse(URL_INGREDIENT, "POST", new JSONObject(ingredient.toString()), null);
         return convertToIngredient(new JSONObject(response.body().string()));
     }
 
-    private Ingredient convertToIngredient(JSONObject json){
-        return new Ingredient(json.getInt("id"),json.getString("description"),json.getDouble("price"), LocalDate.parse(json.getString("expirationDate")));
+    private Ingredient convertToIngredient(JSONObject json) {
+        return new Ingredient(json.getInt("id"), json.getString("description"), json.getDouble("price"), LocalDate.parse(json.getString("expirationDate")));
     }
 }
