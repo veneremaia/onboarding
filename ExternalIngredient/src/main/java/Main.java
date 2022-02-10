@@ -2,7 +2,9 @@ import entity.Ingredient;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -14,5 +16,10 @@ public class Main {
         ingredientClient.addIngredient(pollo);
         System.out.println(ingredientClient.getIngredientById(1));
         System.out.println(ingredientClient.getIngredientById(1));
+        Map<String, String> params = new HashMap<>();
+        params.put("page","2");
+        params.put("size","4");
+        params.put("sort","description");
+        System.out.println(ingredientClient.getIngredients(params));
     }
 }
