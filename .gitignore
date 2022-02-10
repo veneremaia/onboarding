@@ -1,0 +1,33 @@
+**/tools/
+.flattened-pom.xml
+
+*.class
+
+#for docker-build
+.m2/repository 
+.npm/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# logs
+*.log*
+
+# eclipse project
+.classpath
+.project
+.settings
+.factorypath
+target
+bin
+
+# IntelliJ IDEA
+*.iml
+*/.idea/
+*.idea/
+*.run/
+
+# VS Code
+.vscode
