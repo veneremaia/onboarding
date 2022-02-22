@@ -1,9 +1,17 @@
 package com.onboarding.api.repository;
 
 import com.onboarding.api.repository.entity.Ingredient;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-@Repository
-public interface IngredientRepository extends JpaRepository<Ingredient,Integer> {
+import java.util.Optional;
+
+public interface IngredientRepository {
+
+    Page<Ingredient> findAll(Pageable pageable);
+
+    Optional<Ingredient> findById(Integer id);
+
+    Ingredient save(Ingredient ingredient);
+
 }

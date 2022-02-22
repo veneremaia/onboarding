@@ -1,6 +1,5 @@
 package com.onboarding.api.service;
 
-import com.onboarding.api.controller.dto.IngredientDto;
 import com.onboarding.api.repository.IngredientRepository;
 import com.onboarding.api.repository.entity.Ingredient;
 import com.onboarding.api.service.domain.IngredientBo;
@@ -38,10 +37,10 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     private IngredientBo mapToBo(Ingredient entity) {
-        return new IngredientBo(entity.getId(), entity.getDescription(), entity.getPrice(),entity.getExpirationDate());
+        return new IngredientBo(entity.getId(), entity.getDescription(), entity.getPrice(), entity.getExpirationDate());
     }
 
     private Ingredient mapToEntity(IngredientBo bo) {
-        return new Ingredient(bo.getId(), bo.getDescription(), bo.getPrice(),bo.getExpirationDate());
+        return new Ingredient(bo.getId(), bo.getDescription(), bo.getPrice(), bo.getExpirationDate());
     }
 }
