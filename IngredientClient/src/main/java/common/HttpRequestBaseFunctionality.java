@@ -10,26 +10,23 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 public class HttpRequestBaseFunctionality {
 
     private final String APPLICATION_JSON = "application/json";
-    private String baseUrl;
+    private final String baseUrl;
 
     public HttpRequestBaseFunctionality(String baseUrl){
         this.baseUrl = baseUrl;
     }
-    protected Response getResponse(String url, String method, JSONObject body, Map<String,String>params) throws IOException {
-        RequestBody requestBody = null;
-        if(body!=null)
-            requestBody = RequestBody.create(MediaType.parse(APPLICATION_JSON), body.toString());
+
+    protected Response getResponse(String url, String method, Optional<JSONObject> body, Optional<Map<String,String>> params) throws IOException {
+        RequestBody requestBody = body.map(b -> RequestBody.create(MediaType.parse(APPLICATION_JSON), b.toString()))
+                .orElse(null);
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder httpBuilder = HttpUrl.parse(baseUrl + url).newBuilder();
-        if (params != null) {
-            for(Map.Entry<String, String> param : params.entrySet()) {
-                httpBuilder.addQueryParameter(param.getKey(),param.getValue());
-            }
-        }
+        params.ifPresent(p-> p.forEach(httpBuilder::addQueryParameter));
         Request request = new Request.Builder()
                 .url(httpBuilder.build())
                 .method(method.toUpperCase(), requestBody)

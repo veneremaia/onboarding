@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class IngredientClient extends HttpRequestBaseFunctionality {
 
@@ -23,11 +24,11 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
     }
 
     public List<Ingredient> getIngredients() throws IOException {
-       return getIngredients(null);
+       return getIngredients(Optional.empty());
     }
 
-    public List<Ingredient> getIngredients(Map<String, String> params) throws IOException {
-        Response response = this.getResponse(URL_INGREDIENT, "GET", null, params);
+    public List<Ingredient> getIngredients(Optional<Map<String, String>> params) throws IOException {
+        Response response = this.getResponse(URL_INGREDIENT, "GET", Optional.empty(), params);
         List<Ingredient> result = new ArrayList<>();
         for (Object g : new JSONArray(response.body().string())) {
             result.add(convertToIngredient((JSONObject) g));
@@ -40,14 +41,14 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
             cache.get(id).setReadFrom("cache");
             return cache.get(id);
         }
-        Response response = this.getResponse(URL_INGREDIENT + "/" + id, "GET", null, null);
+        Response response = this.getResponse(URL_INGREDIENT + "/" + id, "GET", Optional.empty(), Optional.empty());
         Ingredient result = convertToIngredient(new JSONObject(response.body().string()));
         cache.put(result.getId(), result);
         return result;
     }
 
     public Ingredient addIngredient(Ingredient ingredient) throws IOException {
-        Response response = this.getResponse(URL_INGREDIENT, "POST", new JSONObject(ingredient.toString()), null);
+        Response response = this.getResponse(URL_INGREDIENT, "POST", Optional.of(new JSONObject(ingredient.toString())), Optional.empty());
         return convertToIngredient(new JSONObject(response.body().string()));
     }
 
