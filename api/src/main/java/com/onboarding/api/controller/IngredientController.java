@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,9 +33,10 @@ public class IngredientController {
     public ResponseEntity<List<IngredientDto>> getAll(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
-            @RequestParam(name = "sort", defaultValue = "id") String sort
+            @RequestParam(name = "sort", defaultValue = "id") String sort,
+            @RequestParam(name = "filter", required = false) String filter
     ) {
-        List<IngredientDto> result = service.findAll(page, size, sort).stream()
+        List<IngredientDto> result = service.findAll(page, size, sort, Optional.ofNullable(filter)).stream()
                 .map(this::mapToDto).collect(Collectors.toList());
         LOG.debug("result -> {}", result);
         return ResponseEntity.ok().body(result);

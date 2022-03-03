@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-@ConditionalOnProperty(prefix = "repository", name = "system", havingValue = "ddbb")
+@ConditionalOnProperty(prefix = "repository", name = "system", havingValue = "db")
 public class IngredientJPARespositoryImpl implements IngredientRepository {
 
     private final IngredientJPARepository repository;
