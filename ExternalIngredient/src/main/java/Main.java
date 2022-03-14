@@ -1,9 +1,8 @@
 import entity.Ingredient;
-
+import entity.ResponseInfo;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,15 +15,26 @@ public class Main {
         // Add ingredient
         Ingredient pollo = new Ingredient("Harina", 2.20, LocalDate.parse("2024-02-15"));
         ingredientClient.addIngredient(pollo);
+
+
         // Get ingredient by api
-        System.out.println(ingredientClient.getIngredientById(1));
+        ResponseInfo<Ingredient> ingredient1 = ingredientClient.getIngredientById(1);
+        System.out.println(
+                "Response data: " + ingredient1.getTime() + " from " + ingredient1.getReadFrom() );
+        System.out.println(
+                "Resultado: " + ingredient1.getResult());
         // Get ingredient by cache
-        System.out.println(ingredientClient.getIngredientById(1));
+        ResponseInfo<Ingredient> ingredient2 = ingredientClient.getIngredientById(1);
+        System.out.println(
+                "Response data: " + ingredient2.getTime() + " from " + ingredient2.getReadFrom() );
+        System.out.println(
+                "Resultado: " + ingredient2.getResult());
+
         // Parametros
         Map<String, String> params = new HashMap<>();
         params.put("page","2");
         params.put("size","4");
         params.put("sort","description");
-        System.out.println(ingredientClient.getIngredients(Optional.of(params)));
+        System.out.println(ingredientClient.getIngredients(Optional.of(params)).getResult());
     }
 }

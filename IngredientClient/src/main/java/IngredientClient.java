@@ -1,6 +1,7 @@
 import com.squareup.okhttp.Response;
 import common.HttpRequestBaseFunctionality;
 import entity.Ingredient;
+import entity.ResponseInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,6 +17,10 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
 
     private final String URL_INGREDIENT = "/ingredient";
 
+    private final String API = "API";
+
+    private final String CACHE = "Cache";
+
     private Map<Integer, Ingredient> cache;
 
     public IngredientClient(String baseUrl) {
@@ -23,28 +28,28 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
         this.cache = new HashMap<>();
     }
 
-    public List<Ingredient> getIngredients() throws IOException {
+    public ResponseInfo<List<Ingredient>> getIngredients() throws IOException {
        return getIngredients(Optional.empty());
     }
 
-    public List<Ingredient> getIngredients(Optional<Map<String, String>> params) throws IOException {
+    public ResponseInfo<List<Ingredient>> getIngredients(Optional<Map<String, String>> params) throws IOException {
         Response response = this.getResponse(URL_INGREDIENT, "GET", Optional.empty(), params);
-        List<Ingredient> result = new ArrayList<>();
+        List<Ingredient> ingredients = new ArrayList<>();
         for (Object g : new JSONArray(response.body().string())) {
-            result.add(convertToIngredient((JSONObject) g));
+            ingredients.add(convertToIngredient((JSONObject) g));
         }
+        ResponseInfo<List<Ingredient>> result = new ResponseInfo<>(ingredients, Long.parseLong(response.headers().get("time")), API);
         return result;
     }
 
-    public Ingredient getIngredientById(int id) throws IOException {
+    public ResponseInfo<Ingredient> getIngredientById(int id) throws IOException {
         if (cache.containsKey(id)) {
-            cache.get(id).setReadFrom("cache");
-            return cache.get(id);
+            return new ResponseInfo<>(cache.get(id),0,CACHE);
         }
         Response response = this.getResponse(URL_INGREDIENT + "/" + id, "GET", Optional.empty(), Optional.empty());
-        Ingredient result = convertToIngredient(new JSONObject(response.body().string()));
-        cache.put(result.getId(), result);
-        return result;
+        Ingredient ingredient = convertToIngredient(new JSONObject(response.body().string()));
+        cache.put(ingredient.getId(), ingredient);
+        return new ResponseInfo<>(ingredient,Long.parseLong(response.headers().get("time")), API);
     }
 
     public Ingredient addIngredient(Ingredient ingredient) throws IOException {

@@ -1,6 +1,7 @@
 package com.onboarding.api.controller;
 
 import com.onboarding.api.controller.dto.IngredientDto;
+import com.onboarding.api.controller.interceptor.InfoResponseInterceptor;
 import com.onboarding.api.service.IngredientService;
 import com.onboarding.api.service.domain.IngredientBo;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class IngredientController {
     private final IngredientService service;
 
     @GetMapping
+    @InfoResponseInterceptor
     public ResponseEntity<List<IngredientDto>> getAll(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
@@ -43,6 +45,7 @@ public class IngredientController {
     }
 
     @GetMapping("/{ingredientId}")
+    @InfoResponseInterceptor
     public ResponseEntity<IngredientDto> get(@PathVariable(name = "ingredientId") Integer ingredientId) {
         IngredientDto result = mapToDto(service.findById(ingredientId));
         LOG.debug("result -> {}", result);

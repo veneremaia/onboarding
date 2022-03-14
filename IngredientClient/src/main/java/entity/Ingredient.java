@@ -12,17 +12,6 @@ public class Ingredient {
 
     private LocalDate expirationDate;
 
-    private String readFrom;
-
-
-    public String getReadFrom() {
-        return readFrom;
-    }
-
-    public void setReadFrom(String readFrom) {
-        this.readFrom = readFrom;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -45,7 +34,6 @@ public class Ingredient {
         this.description = description;
         this.price = price;
         this.expirationDate = expirationDate;
-        this.readFrom = "API";
     }
 
     public Ingredient(String description, Double price, LocalDate expirationDate) {
@@ -58,6 +46,6 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "{'description': '" + description + "', 'price': '" + price +"', 'expirationDate': '" + expirationDate +"', 'readFrom': '" + readFrom + "'}";
+        return "{'description': '" + description + "', 'price': '" + price + "', 'expirationDate': '" + expirationDate + "'}";
     }
 }
