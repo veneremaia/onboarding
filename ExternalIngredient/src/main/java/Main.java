@@ -11,16 +11,19 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         // Se le pasa la url base al crear el cliente
+        WaiterClient waiterClient = new WaiterClient(args[0]);
         IngredientClient ingredientClient = new IngredientClient(args[0]);
+
+        // Add mozo
+        waiterClient.saveWaiter("1","Juan");
         // Add ingredient
         Ingredient pollo = new Ingredient("Harina", 2.20, LocalDate.parse("2024-02-15"));
         ingredientClient.addIngredient(pollo);
-
-
         // Get ingredient by api
         ResponseInfo<Ingredient> ingredient1 = ingredientClient.getIngredientById(1);
         System.out.println(
-                "Response data: " + ingredient1.getTime() + " from " + ingredient1.getReadFrom() );
+                "Response data: " + ingredient1.getTime() + " from " + ingredient1.getReadFrom()
+                        + " waiter: " + ingredient1.getWaiter() + " Number of queries: " + ingredient1.getQueryCount());
         System.out.println(
                 "Resultado: " + ingredient1.getResult());
         // Get ingredient by cache

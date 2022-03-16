@@ -1,4 +1,7 @@
-import com.squareup.okhttp.Response;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import common.HttpRequestBaseFunctionality;
 import entity.Ingredient;
 import entity.ResponseInfo;
@@ -38,7 +41,12 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
         for (Object g : new JSONArray(response.body().string())) {
             ingredients.add(convertToIngredient((JSONObject) g));
         }
-        ResponseInfo<List<Ingredient>> result = new ResponseInfo<>(ingredients, Long.parseLong(response.headers().get("time")), API);
+        Headers headers = response.headers();
+        ResponseInfo<List<Ingredient>> result = new ResponseInfo<>(ingredients,
+                Long.parseLong(headers.get("time")),
+                API,
+                headers.get("waiter"),
+                Integer.parseInt(headers.get("queryCount")));
         return result;
     }
 
@@ -49,11 +57,17 @@ public class IngredientClient extends HttpRequestBaseFunctionality {
         Response response = this.getResponse(URL_INGREDIENT + "/" + id, "GET", Optional.empty(), Optional.empty());
         Ingredient ingredient = convertToIngredient(new JSONObject(response.body().string()));
         cache.put(ingredient.getId(), ingredient);
-        return new ResponseInfo<>(ingredient,Long.parseLong(response.headers().get("time")), API);
+        Headers headers = response.headers();
+        return new ResponseInfo<>(ingredient,
+                Long.parseLong(headers.get("time")),
+                API,
+                headers.get("waiter"),
+                Integer.parseInt(headers.get("queryCount")));
     }
 
     public Ingredient addIngredient(Ingredient ingredient) throws IOException {
-        Response response = this.getResponse(URL_INGREDIENT, "POST", Optional.of(new JSONObject(ingredient.toString())), Optional.empty());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), String.valueOf(new JSONObject(ingredient.toString())));
+        Response response = this.getResponse(URL_INGREDIENT, "POST", Optional.of(body), Optional.empty());
         return convertToIngredient(new JSONObject(response.body().string()));
     }
 
