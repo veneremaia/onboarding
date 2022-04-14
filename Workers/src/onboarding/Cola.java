@@ -35,50 +35,26 @@ public class Cola {
     }*/
 
     public void addLibro(Libro l) throws InterruptedException {
-        System.out.println(Thread.currentThread().getId() + " add libro 1");
+        System.out.println(Thread.currentThread().getId() + " Try to add libro "+ l.getContenido());
         synchronized(this.libros){
             libros.add(l);
         }
-        System.out.println(Thread.currentThread().getId() + " add libro 2");
+        System.out.println(Thread.currentThread().getId() + " Adding libro " + l.getContenido());
         existeLibro.release();
-        System.out.println(Thread.currentThread().getId() + " add libro 3");
-
+        System.out.println(Thread.currentThread().getId() + "  Libro was added " + l.getContenido());
+        System.out.println("Cantidad disponibles para obtener libros : "+ existeLibro.availablePermits());
     }
 
     public Libro getLibro() throws InterruptedException {
-        System.out.println(Thread.currentThread().getId() + " read libro 1");
+        System.out.println(Thread.currentThread().getId() + " Try to get libro step 1");
         existeLibro.acquire();
-        System.out.println(Thread.currentThread().getId() + " read libro 2");
+        System.out.println(Thread.currentThread().getId() + " Getting libro step 2");
         Libro l;
         synchronized(this.libros){
             l =  libros.remove(0);
         }
-        System.out.println(Thread.currentThread().getId() + " Libro l" + l);
+        System.out.println(Thread.currentThread().getId() + " Return Libro " + l.getContenido());
         return l;
-    }
-
-    public static void main(String[] args) {
-        Cola c = new Cola();
-        Thread t1 = new Thread(){
-          public void run ()  {
-              try {
-                  c.getLibro();
-              } catch (InterruptedException e) {
-                  e.printStackTrace();
-              }
-          }
-        };
-        Thread t2 = new Thread(){
-            public void run ()  {
-                try {
-                    c.addLibro(new Libro("Libro1"));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        t1.start();
-        t2.start();
     }
 
 }

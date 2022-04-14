@@ -18,7 +18,7 @@ public class Libro {
         return acciones;
     }
 
-    public void addAcciones(String accion) {
+    public void addAccion(String accion) {
         this.acciones.add(accion);
     }
 

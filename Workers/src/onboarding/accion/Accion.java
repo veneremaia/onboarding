@@ -1,6 +1,8 @@
 package onboarding.accion;
 
+import onboarding.Libro;
+
 public interface Accion {
 
-    void doIt();
+    Libro doIt(Libro l);
 }
